@@ -8,6 +8,6 @@ write_files:
   content: ${wg_init}
   owner: root:root
   path: /usr/local/bin/wg-init.sh
-  permissions: '0644'
+  permissions: '0755'
 runcmd:
 - [/usr/local/bin/wg-init.sh]
