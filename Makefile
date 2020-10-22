@@ -6,7 +6,7 @@ TF_VARS := -var-file=terraform/terraform.tfvars \
 .PHONY: deps
 deps:
 	asdf plugin add terraform || true
-	asdf install
+	asdf install || true
 
 .PHONY: init
 init: deps
