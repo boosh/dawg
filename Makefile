@@ -23,3 +23,6 @@ apply: init
 .PHONY: destroy
 destroy: init
 	terraform destroy $(TF_VARS) $(TF_DIR)
+
+.PHONY: deploy
+deploy: plan apply

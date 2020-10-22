@@ -5,9 +5,16 @@ packages:
 - wireguard
 write_files:
 - encoding: b64
-  content: ${wg_init}
+  content: ${wg_configure_server}
   owner: root:root
-  path: /usr/local/bin/wg-init.sh
+  path: /usr/local/bin/wg-configure-server.sh
+  permissions: '0755'
+- encoding: b64
+  content: ${wg_add_client}
+  owner: root:root
+  path: /usr/local/bin/wg-add-client.sh
   permissions: '0755'
 runcmd:
-- [/usr/local/bin/wg-init.sh]
+- [ufw, allow, 22/tcp]
+- [ufw, enable]
+- [/usr/local/bin/wg-configure-server.sh]
