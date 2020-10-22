@@ -22,7 +22,7 @@ apply: init
 
 .PHONY: destroy
 destroy: init
-	terraform destroy $(TF_VARS) $(TF_DIR)
+	terraform destroy -auto-approve $(TF_VARS) $(TF_DIR)
 
 .PHONY: deploy
 deploy: plan apply
