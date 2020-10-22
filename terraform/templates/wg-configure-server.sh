@@ -32,10 +32,6 @@ DNS = 1.1.1.1
 EOF
 }
 
-# generate a preshared key
-wg genpsk > /etc/wireguard/wgpsk.key
-chmod 0600 /etc/wireguard/wgpsk.key
-
 generate_keys server
 
 sed -i -E 's/#(net.ipv4.ip_forward=1)/\1/' /etc/sysctl.conf
