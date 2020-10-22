@@ -26,3 +26,10 @@ destroy: init
 
 .PHONY: deploy
 deploy: plan apply
+
+.PHONY: add-client
+add-client:
+ifndef name
+	$(error 'name' is undefined - run with e.g. 'make add-client name=laptop')
+endif
+	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh $(name) > ~/Downloads/wg-$(name).conf

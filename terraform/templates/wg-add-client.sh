@@ -51,4 +51,8 @@ generate_keys $name
 
 add_client $name $ext_ip $PORT $INT_NET_ADDR
 
+systemctl restart wg-quick@wg0
+
+rm /etc/wireguard/${name}_p*.key
+
 cat /etc/wireguard/client_$name.conf

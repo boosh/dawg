@@ -4,6 +4,7 @@ package_upgrade: true
 packages:
 - wireguard
 - resolvconf
+- qrencode
 write_files:
 - encoding: b64
   content: ${wg_configure_server}
