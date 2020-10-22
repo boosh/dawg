@@ -16,20 +16,20 @@ function add_client() {
   local port=$3
   local int_net_addr=$4
 
+  client_ip=$int_net_addr.$(shuf -i 2-255 -n 1)/32
+
   cat >> /etc/wireguard/wg0.conf <<EOF
 [Peer]
 # $name
 PublicKey = $(cat /etc/wireguard/${name}_public.key)
 PresharedKey = $(cat /etc/wireguard/wgpsk.key)
-AllowedIPs = 0.0.0.0/0, ::/0
-Endpoint = $ext_ip:$port
-PersistentKeepalive = 25
+AllowedIPs = $client_ip
 
 EOF
 
 cat > /etc/wireguard/client_$name.conf <<EOF
 [Interface]
-Address = $int_net_addr.$(shuf -i 2-255 -n 1)/32
+Address = $client_ip
 PrivateKey = $(cat /etc/wireguard/${name}_private.key | tr -d '\n')
 DNS = 1.1.1.1
 
@@ -38,6 +38,7 @@ PublicKey = $(cat /etc/wireguard/server_public.key | tr -d '\n')
 PresharedKey = $(cat /etc/wireguard/wgpsk.key | tr -d '\n')
 Endpoint = $ext_ip:$port
 AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 25
 EOF
 }
 
@@ -49,3 +50,5 @@ ext_ip=$(ip addr sh "$ext_if" | grep 'inet ' | xargs | awk -F'[ /]' '{ print $2 
 generate_keys $name
 
 add_client $name $ext_ip $PORT $INT_NET_ADDR
+
+cat /etc/wireguard/client_$name.conf
