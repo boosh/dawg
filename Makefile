@@ -27,9 +27,18 @@ destroy: init
 .PHONY: deploy
 deploy: plan apply
 
-.PHONY: add-client
-add-client:
+.PHONY: new-client
+new-client:
 ifndef name
-	$(error 'name' is undefined - run with e.g. 'make add-client name=laptop')
+	$(error 'name' is undefined - run with e.g. 'make new-client name=laptop')
 endif
 	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh $(name) > ~/Downloads/wg-$(name).conf
+
+.PHONY: status
+status:
+	ssh root@$$(terraform output ip | tr -d '\n') wg ;\
+	if [[ $$? == 0 ]]; then echo "Server ready"; else echo "Server not ready..."; fi
+
+.PHONY: ssh
+ssh:
+	ssh root@$$(terraform output ip | tr -d '\n')

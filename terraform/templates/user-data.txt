@@ -1,4 +1,8 @@
 #cloud-config
+ssh_keys:
+  ecdsa_public: ${ecdsa_public}
+  ecdsa_private: |
+    ${indent(4, ecdsa_private)}
 package_update: true
 package_upgrade: true
 packages:
@@ -20,3 +24,7 @@ runcmd:
 - [ufw, allow, 22/tcp]
 - [ufw, enable]
 - [/usr/local/bin/wg-configure-server.sh]
+power_state:
+  mode: reboot
+  message: Rebooting
+  condition: True

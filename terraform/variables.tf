@@ -24,3 +24,13 @@ variable "ssh_keys" {
   type = list(number)
   description = "IDs of SSH keys to add"
 }
+
+variable "ecdsa_public" {
+  type = string
+  description = "ecdsa public SSH key"
+}
+
+variable "ecdsa_private" {
+  type = string
+  description = "ecdsa private SSH key"
+}
