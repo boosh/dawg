@@ -1,8 +1,11 @@
 DO_TOKEN_FILE := ~/.digitalocean/token
+YDNS_CREDS_FILE := ~/.ydns
+
 TF_DIR := terraform
 TF_PLAN := $(TF_DIR)/_terraform.plan
 TF_VARS := -var-file=terraform/terraform.tfvars \
-			-var="do_token=$$(cat $(DO_TOKEN_FILE) | tr -d '\n')"
+			-var="do_token=$$(cat $(DO_TOKEN_FILE) | tr -d '\n')" \
+			-var="ydns_credentials=$$(cat $(YDNS_CREDS_FILE) | tr -d '\n')"
 
 .DEFAULT_GOAL := help
 

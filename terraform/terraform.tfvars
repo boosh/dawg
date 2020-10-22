@@ -1,6 +1,6 @@
-ssh_keys = [1690507]
-ecdsa_public = "AAAAC3NzaC1lZDI1NTE5AAAAIORtjMkYXDDSk4hTg6TXCCqtddybmnpghKUvyvVkw+FC"
-ecdsa_private =<<EOF
+ssh_keys      = [1690507]
+ecdsa_public  = "AAAAC3NzaC1lZDI1NTE5AAAAIORtjMkYXDDSk4hTg6TXCCqtddybmnpghKUvyvVkw+FC"
+ecdsa_private = <<EOF
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
 QyNTUxOQAAACDkbYzJGFww0pOIU4Ok1wgqrXXcm5p6YISlL8r1ZMPhQgAAAJCDppG1g6aR
@@ -9,3 +9,5 @@ AAAECFgCaNK1naeL2+vpVpq8p7Qk65eVJ5bczBFgTP/6ntCORtjMkYXDDSk4hTg6TXCCqt
 ddybmnpghKUvyvVkw+FCAAAAB3Jvb3RAd2cBAgMEBQY=
 -----END OPENSSH PRIVATE KEY-----
 EOF
+
+ydns_url = "fp.ydns.eu"

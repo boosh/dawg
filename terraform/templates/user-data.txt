@@ -20,6 +20,11 @@ write_files:
   owner: root:root
   path: /usr/local/bin/wg-add-client.sh
   permissions: '0755'
+- encoding: b64
+  content: ${update_ydns}
+  owner: root:root
+  path: /usr/local/bin/update-ydns.sh
+  permissions: '0755'
 runcmd:
 - [ufw, allow, 22/tcp]
 - [ufw, enable]
