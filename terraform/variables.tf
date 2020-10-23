@@ -1,3 +1,10 @@
+variable "clients" {
+  type = map(object({
+    ip         = string
+    public_key = string
+  }))
+}
+
 variable "do_token" {
   type        = string
   description = "DigitalOcean API token"

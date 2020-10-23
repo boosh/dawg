@@ -11,7 +11,28 @@ resource "digitalocean_droplet" "wg" {
   })
 }
 
+resource "null_resource" "server_ready" {
+  provisioner "local-exec" {
+    interpreter = ["bash", "-c"]
+    command     = <<EOF
+set -x
+while :
+do
+  make status ip=${digitalocean_droplet.wg.ipv4_address}
+  if [ $? -ne 0 ]; then
+    echo "Not ready, sleeping"
+    sleep 10
+  else
+    break
+  fi
+done
+EOF
+  }
+}
+
 resource "null_resource" "update_ydns" {
+  depends_on = [null_resource.server_ready]
+
   connection {
     type        = "ssh"
     user        = "root"
@@ -26,4 +47,13 @@ resource "null_resource" "update_ydns" {
   }
 }
 
-// todo - add a list of clients
+module "clients" {
+  source     = "./modules/client"
+  depends_on = [null_resource.server_ready]
+
+  for_each   = var.clients
+  ip         = each.value.ip
+  name       = each.key
+  public_key = each.value.public_key
+  server_ip  = digitalocean_droplet.wg.ipv4_address
+}
