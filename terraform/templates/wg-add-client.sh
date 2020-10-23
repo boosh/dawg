@@ -8,13 +8,16 @@ function usage() {
   cat <<EOF
 Create a new client or add an existing client to the Wireguard config.
 
-Usage: $1 MODE NAME [CLIENT_IP] [PUBLIC_KEY]
+Usage: $0 [OPTIONS] MODE NAME
 
 Parameters:
-MODE        Either 'add' or 'create'. If 'add', pass the 'CLIENT_IP' and 'PUBLIC_KEY' arguments
+MODE        Either 'add' or 'create'. If 'add', extra options are required. See below.
 NAME        Client name
-CLIENT_IP   If adding a client, the IP to assign it within the VPN subnet
-PUBLIC_KEY  The client's public key
+
+Options:
+ -c CLIENT_IP      If adding a client, the IP to assign it within the VPN subnet. Required when mode is 'add'.
+ -e ENDPOINT       Server domain name. If not given, the server's public IP will be automatically detected and used.
+ -k PUBLIC_KEY     The client's public key. Required when mode is 'add'.
 
 EOF
 
@@ -32,7 +35,7 @@ function generate_keys() {
 # Returns the client's VPN IP.
 function write_client_config() {
   local name=$1
-  local ext_ip=$2
+  local endpoint=$2
   local port=$3
   local int_net_addr=$4
 
@@ -48,7 +51,7 @@ DNS = 1.1.1.1
 
 [Peer]
 PublicKey = $(cat /etc/wireguard/server_public.key | tr -d '\n')
-Endpoint = $ext_ip:$port
+Endpoint = $endpoint:$port
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
 EOF
@@ -77,16 +80,19 @@ function main() {
   local name=$2
   local client_ip=$3
   local public_key=$4
+  local endpoint=$5
 
   if [[ "$name" == "" ]]; then
     usage
   fi
 
-  ext_if=$(ip route sh | awk '$1 == "default" { print $5 }')
-  ext_ip=$(ip addr sh "$ext_if" | grep 'inet ' | xargs | awk -F'[ /]' '{ print $2 }')
+  if [[ "$endpoint" == "" ]]; then
+    ext_if=$(ip route sh | awk '$1 == "default" { print $5 }')
+    endpoint=$(ip addr sh "$ext_if" | grep 'inet ' | xargs | awk -F'[ /]' '{ print $2 }')
+  fi
 
   if [[ "$mode" == "create" ]]; then
-    client_ip=$(write_client_config $name $ext_ip $PORT $INT_NET_ADDR)
+    client_ip=$(write_client_config $name $endpoint $PORT $INT_NET_ADDR)
     update_server_config $name $client_ip "$(cat /etc/wireguard/${name}_public.key)"
 
     rm /etc/wireguard/${name}_public.key
@@ -103,8 +109,29 @@ function main() {
   systemctl restart wg-quick@wg0
 }
 
-if [[ "$1" == "help" ]]; then
-  usage $1
+if [[ "$#" -lt 2 ]]; then
+   usage
 fi
 
-main $1 $2 $3 $4
+optstring=":hc:e:k:"
+
+client_ip=""
+endpoint=""
+public_key=""
+
+while getopts ${optstring} arg; do
+  case "${arg}" in
+    c) client_ip="${OPTARG}" ;;
+    e) endpoint="${OPTARG}" ;;
+    k) public_key="${OPTARG}" ;;
+
+    *)
+      echo "Invalid option: -${OPTARG}."
+      echo
+      usage
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
+main $1 $2 "$client_ip" "$public_key" "$endpoint"

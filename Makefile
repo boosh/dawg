@@ -47,7 +47,7 @@ new-client: ## Generate a new client config and write it to ~/Downloads
 ifndef name
 	$(error 'name' is undefined - run with e.g. 'make new-client name=laptop')
 endif
-	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh create $(name) > ~/Downloads/wg-$(name).conf
+	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh -e $(terraform output endpoint) create $(name) > ~/Downloads/wg-$(name).conf
 
 .PHONY: add-client
 add-client: ## Add a client config
@@ -60,7 +60,7 @@ endif
 ifndef key
 	$(error 'key' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=xxx')
 endif
-	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh add $(name) $(ip) $(key)
+	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh -c $(ip) -k $(key) add $(name)
 
 ##@ Server commands
 

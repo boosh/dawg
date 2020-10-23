@@ -10,4 +10,4 @@ ddybmnpghKUvyvVkw+FCAAAAB3Jvb3RAd2cBAgMEBQY=
 -----END OPENSSH PRIVATE KEY-----
 EOF
 
-ydns_url = "fp.ydns.eu"
+ydns_url = "wg.ydns.eu"
