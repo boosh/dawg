@@ -1,8 +1,4 @@
 #cloud-config
-ssh_keys:
-  ecdsa_public: ${ecdsa_public}
-  ecdsa_private: |
-    ${indent(4, ecdsa_private)}
 package_update: true
 package_upgrade: true
 packages:

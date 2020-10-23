@@ -25,16 +25,6 @@ variable "ssh_keys" {
   description = "IDs of SSH keys to add"
 }
 
-variable "ecdsa_public" {
-  type        = string
-  description = "ecdsa public SSH key"
-}
-
-variable "ecdsa_private" {
-  type        = string
-  description = "ecdsa private SSH key"
-}
-
 variable "ydns_credentials" {
   type        = string
   description = "Credentials in the form 'username:password' (password can also be an API key)"
