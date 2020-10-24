@@ -13,5 +13,9 @@ clients = {
   "mac" = {
     ip         = "10.0.0.183/32",
     public_key = "dWs+Z2DIB1GvJSV0nBj3ArtU2dbPPAtpC3cGCTf5eTY="
+  },
+  "tablet" = {
+    ip         = "10.0.0.251/32",
+    public_key = "sLXloK3GZca6Kfxu+B+1ZZU3eQBKI7XlidRq2CbZf2Y="
   }
 }
