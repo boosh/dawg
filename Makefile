@@ -34,6 +34,7 @@ plan: init ## Terraform plan
 .PHONY: apply
 apply: init ## Terraform apply
 	terraform apply $(TF_PLAN)
+	$(MAKE) download-key
 
 .PHONY: destroy
 destroy: init ## Terraform destroy
@@ -79,8 +80,13 @@ ssh: ## SSH to the server
 
 .PHONY: download-key
 download-key: ## Download the server's private key and store locally
-	ssh root@$$(terraform output ip | tr -d '\n') cat /etc/wireguard/server_private.key > $(SERVER_PRIVATE_KEY_PATH)
-	@echo Private key downloaded to $(SERVER_PRIVATE_KEY_PATH)
+	set -eo pipefail ;\
+	if [[ -f $(SERVER_PRIVATE_KEY_PATH) ]]; then \
+		echo Private key already exists at $(SERVER_PRIVATE_KEY_PATH) ;\
+	else \
+		ssh root@$$(terraform output ip | tr -d '\n') cat /etc/wireguard/server_private.key > $(SERVER_PRIVATE_KEY_PATH) && \
+			echo Private key downloaded to $(SERVER_PRIVATE_KEY_PATH) ;\
+	fi
 
 .PHONY: qr
 qr: ## Generate a QR code for the named config

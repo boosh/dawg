@@ -2,12 +2,16 @@ ssh_keys = [1690507]
 ydns_url = "wg.ydns.eu"
 
 clients = {
-  //  "phone" = {
-  //    ip         = "10.0.0.10/32",
-  //    public_key = "8CZvpKlxTb3b6pq87I7cJOvMYikOi+0LDvFQIzguFyA="
-  //  },
+  "burner" = {
+    ip         = "10.0.0.36/32",
+    public_key = "k86wn4GJKnbl/Z+zO48t1a5dL623E2AyUHJKr8Rn+VQ="
+  },
+  "phone" = {
+    ip         = "10.0.0.45/32",
+    public_key = "i10RQDqNL2fjMqYqyhNkHQVCUgGlvdjy8HWZJqmq0EA="
+  },
   "mac" = {
-    ip         = "10.0.0.83/32",
-    public_key = "Chfgqy+rYrinl3Sov4I3cV4DX+O/rA1mXYUfSUJ4Wyk="
+    ip         = "10.0.0.183/32",
+    public_key = "dWs+Z2DIB1GvJSV0nBj3ArtU2dbPPAtpC3cGCTf5eTY="
   }
 }
