@@ -10,7 +10,7 @@ With a single command, this repo will create a Digital Ocean droplet (server) an
 ## Quickstart
 1. Download Terraform or asdf & qrencode (with e.g. `brew install asdf qrencode` if on a Mac)
 1. Sign up for a Digital Ocean account. Get an API key and write it to `~/.digitalocean/token`. Create an SSH key in Digital Ocean.
-1. Sign up with ydns.io. Get an API key and write it to `~/.ydns`
+1. Sign up with ydns.io. Get an API key and write it to `~/.ydns` in the form `<username>:<password/key>`
 1. Clone this repo locally
 1. Edit `terraform/terraform.tfvars`: 
     1. Add your Digital Ocean SSH key ID (you can find this from the DO API)
