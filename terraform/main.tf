@@ -23,6 +23,7 @@ do
     echo "Not ready, sleeping"
     sleep 10
   else
+    sleep 30      # let the server restart
     break
   fi
 done

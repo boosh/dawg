@@ -8,6 +8,6 @@ clients = {
   },
   "mac" = {
     ip         = "10.0.0.161/32",
-    public_key = "8CZvpKlxTb3b6pq87I7cJOvMYikOi+0LDvFQIzguFyA="
+    public_key = "Nw82BfF8rrSpSpsaWMZvbkrD2WwGBSQKg7l4m2chc3M="
   }
 }
