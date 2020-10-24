@@ -9,8 +9,17 @@ EXT_IF=$(ip route sh | awk '$1 == "default" { print $5 }')
 function generate_keys() {
   local name=$1
 
-  wg genkey | tee /etc/wireguard/${name}_private.key | wg pubkey | tee /etc/wireguard/${name}_public.key
-  chmod 600 /etc/wireguard/${name}_private.key
+  private_key_path=/etc/wireguard/${name}_private.key
+
+  if [[ ! -f "$private_key_path" ]]; then
+    wg genkey > "$private_key_path"
+  fi
+
+  if [[ ! -f /etc/wireguard/${name}_public.key ]]; then
+  cat "$private_key_path" | wg pubkey | tee /etc/wireguard/${name}_public.key
+  fi
+
+  chmod 600 "$private_key_path"
 }
 
 function write_server_config() {

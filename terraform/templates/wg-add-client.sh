@@ -97,6 +97,7 @@ function main() {
 
     rm /etc/wireguard/${name}_public.key
     cat /etc/wireguard/client_$name.conf
+    rm /etc/wireguard/client_$name.conf
   else
     if [[ "$public_key" == "" ]]; then
       usage
