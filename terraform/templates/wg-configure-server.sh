@@ -28,7 +28,8 @@ function write_server_config() {
   local port=$3
   local ext_if=$4
 
-  cat > /etc/wireguard/wg0.conf <<EOF
+  if [[ ! -f /etc/wireguard/wg0.conf ]]; then
+    cat > /etc/wireguard/wg0.conf <<EOF
 # Server configuration
 [Interface]
 PrivateKey = $(cat /etc/wireguard/server_private.key | tr -d '\n')
@@ -39,6 +40,7 @@ PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACC
 DNS = 1.1.1.1
 
 EOF
+  fi
 }
 
 generate_keys server
