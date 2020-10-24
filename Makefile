@@ -1,6 +1,6 @@
 DO_TOKEN_FILE := ~/.digitalocean/token
 YDNS_CREDS_FILE := ~/.ydns
-SERVER_PRIVATE_KEY_PATH := ~/.dowg-private-key
+SERVER_PRIVATE_KEY_PATH := ~/.dawg-private-key
 
 TF_DIR := terraform
 TF_PLAN := $(TF_DIR)/_terraform.plan
@@ -55,13 +55,13 @@ endif
 .PHONY: add-client
 add-client: ## Add a client config
 ifndef name
-	$(error 'name' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=xxx')
+	$(error 'name' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=<public key>')
 endif
 ifndef ip
-	$(error 'ip' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=xxx')
+	$(error 'ip' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=<public key>')
 endif
 ifndef key
-	$(error 'key' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=xxx')
+	$(error 'key' is undefined - run with e.g. 'make add-client name=laptop ip=10.0.0.3 key=<public key>')
 endif
 	ssh root@$$(terraform output ip | tr -d '\n') /usr/local/bin/wg-add-client.sh -c $(ip) -k $(key) add $(name)
 
