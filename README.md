@@ -1,5 +1,5 @@
 # Dawg - Wireguard on Digital Ocean 
-With a single command, this repo will create a Digital Ocean droplet (server) and configure it as Wireguard server, optionally importing previously created client configs. This means you can destroy and recreate the server and it will come back up without needing to reconfigure your clients.
+With a single command, this repo will create a Digital Ocean droplet (server) and configure it as Wireguard server, optionally importing previously created client configs. This means you can destroy and recreate the server and it will come back up without needing to reconfigure your clients. E.g. you could do this on a cron to shut the server down when you're usually asleep and bring it up before you wake up to save money.
 
 ## Features
 * Create a Digital Ocean server configured with Wireguard
@@ -8,7 +8,7 @@ With a single command, this repo will create a Digital Ocean droplet (server) an
 * Display downloaded configs as QR codes to easily configure mobile devices (requires `qrencode`)
 
 ## Quickstart
-1. Download Terraform or asdf
+1. Download Terraform or asdf & qrencode (with e.g. `brew install asdf qrencode` if on a Mac)
 1. Sign up for a Digital Ocean account. Get an API key and write it to `~/.digitalocean/token`. Create an SSH key in Digital Ocean.
 1. Sign up with ydns.io. Get an API key and write it to `~/.ydns`
 1. Clone this repo locally
