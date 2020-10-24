@@ -13,7 +13,7 @@ variable "do_token" {
 variable "droplet_image" {
   type        = string
   description = "Image to launch"
-  default     = "ubuntu-20-04-x64"
+  default     = "ubuntu-20-10-x64"
 }
 
 variable "droplet_region" {
