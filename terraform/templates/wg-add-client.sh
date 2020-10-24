@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-PORT=21923
+PORT=51820
 INT_NET_ADDR=10.0.0
 
 function usage() {

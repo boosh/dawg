@@ -3,7 +3,7 @@ set -exuo pipefail
 
 NETMASK=/24
 INT_NET_ADDR=10.0.0
-PORT=21923
+PORT=51820
 EXT_IF=$(ip route sh | awk '$1 == "default" { print $5 }')
 
 function generate_keys() {
