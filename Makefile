@@ -1,11 +1,13 @@
 DO_TOKEN_FILE := ~/.digitalocean/token
 YDNS_CREDS_FILE := ~/.ydns
+SERVER_PRIVATE_KEY_PATH := ~/.dowg-private-key
 
 TF_DIR := terraform
 TF_PLAN := $(TF_DIR)/_terraform.plan
 TF_VARS := -var-file=terraform/terraform.tfvars \
 			-var="do_token=$$(cat $(DO_TOKEN_FILE) | tr -d '\n')" \
-			-var="ydns_credentials=$$(cat $(YDNS_CREDS_FILE) | tr -d '\n')"
+			-var="ydns_credentials=$$(cat $(YDNS_CREDS_FILE) | tr -d '\n')" \
+			-var="server_private_key=$$(cat $(SERVER_PRIVATE_KEY_PATH) || echo "")"
 
 .DEFAULT_GOAL := help
 
@@ -17,7 +19,7 @@ help:  ## Display this help
 .PHONY: deps
 deps: ## Install dependencies (if using asdf)
 	asdf plugin add terraform || true
-	asdf install || true
+	asdf install || terraform version
 
 .PHONY: init
 init: deps ## Terraform init
@@ -74,6 +76,11 @@ status: ## Print server status
 .PHONY: ssh
 ssh: ## SSH to the server
 	ssh root@$$(terraform output ip | tr -d '\n')
+
+.PHONY: download-key
+download-key: ## Download the server's private key and store locally
+	ssh root@$$(terraform output ip | tr -d '\n') cat /etc/wireguard/server_private.key > $(SERVER_PRIVATE_KEY_PATH)
+	@echo Private key downloaded to $(SERVER_PRIVATE_KEY_PATH)
 
 .PHONY: qr
 qr: ## Generate a QR code for the named config

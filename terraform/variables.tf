@@ -10,26 +10,32 @@ variable "do_token" {
   description = "DigitalOcean API token"
 }
 
-variable "image" {
+variable "droplet_image" {
   type        = string
   description = "Image to launch"
   default     = "ubuntu-20-04-x64"
 }
 
-variable "region" {
+variable "droplet_region" {
   type    = string
   default = "lon1"
 }
 
-variable "size" {
+variable "droplet_size" {
   type        = string
   description = "Size of droplet"
   default     = "s-1vcpu-1gb"
 }
 
+variable "server_private_key" {
+  type        = string
+  description = "Optional private-key to push onto the server"
+  default     = ""
+}
+
 variable "ssh_keys" {
   type        = list(number)
-  description = "IDs of SSH keys to add"
+  description = "IDs of SSH keys to add (get them from the DO API)"
 }
 
 variable "ydns_credentials" {

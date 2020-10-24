@@ -48,6 +48,7 @@ function write_client_config() {
 Address = $client_ip
 PrivateKey = $(cat /etc/wireguard/${name}_private.key | tr -d '\n')
 DNS = 1.1.1.1
+# Note: PublicKey = $(cat /etc/wireguard/${name}_public.key | tr -d '\n')
 
 [Peer]
 PublicKey = $(cat /etc/wireguard/server_public.key | tr -d '\n')

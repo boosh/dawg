@@ -1,19 +1,20 @@
 resource "digitalocean_droplet" "wg" {
-  image    = var.image
+  image    = var.droplet_image
   name     = "wg"
-  region   = var.region
-  size     = var.size
+  region   = var.droplet_region
+  size     = var.droplet_size
   ssh_keys = var.ssh_keys
   user_data = templatefile("${path.module}/templates/user-data.txt", {
+    server_private_key  = var.server_private_key
+    update_ydns         = base64encode(file("${path.module}/templates/update-ydns.sh"))
     wg_configure_server = base64encode(file("${path.module}/templates/wg-configure-server.sh"))
     wg_add_client       = base64encode(file("${path.module}/templates/wg-add-client.sh"))
-    update_ydns         = base64encode(file("${path.module}/templates/update-ydns.sh"))
   })
 }
 
 resource "null_resource" "accept_ssh_key" {
   provisioner "local-exec" {
-    command     = <<EOF
+    command = <<EOF
 set -x
 while :
 do
@@ -34,7 +35,7 @@ resource "null_resource" "server_ready" {
   depends_on = [null_resource.accept_ssh_key]
 
   provisioner "local-exec" {
-    command     = <<EOF
+    command = <<EOF
 set -x
 while :
 do

@@ -21,6 +21,13 @@ write_files:
   owner: root:root
   path: /usr/local/bin/update-ydns.sh
   permissions: '0755'
+%{ if server_private_key != "" }
+- encoding: b64
+  content: ${base64encode(server_private_key)}
+  owner: root:root
+  path: /etc/wireguard/server_private.key
+  permissions: '0400'
+%{ endif }
 runcmd:
 - [ufw, allow, 22/tcp]
 - [ufw, enable]
