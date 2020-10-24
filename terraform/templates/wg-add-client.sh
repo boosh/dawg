@@ -41,7 +41,11 @@ function write_client_config() {
 
   generate_keys $name
 
+  # avoid collisions
   client_ip=$int_net_addr.$(shuf -i 2-255 -n 1)/32
+  while [[ $(grep "$client_ip" /etc/wireguard/wg0.conf)  ]]; do
+    client_ip=$int_net_addr.$(shuf -i 2-255 -n 1)/32
+  done
 
   cat >/etc/wireguard/client_$name.conf <<EOF
 [Interface]
