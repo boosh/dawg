@@ -11,16 +11,36 @@ resource "digitalocean_droplet" "wg" {
   })
 }
 
-resource "null_resource" "server_ready" {
+resource "null_resource" "accept_ssh_key" {
   provisioner "local-exec" {
-    interpreter = ["bash", "-c"]
+    command     = <<EOF
+set -x
+while :
+do
+  ssh-keygen -R ${digitalocean_droplet.wg.ipv4_address}
+  ssh-keyscan -H ${digitalocean_droplet.wg.ipv4_address} >> ~/.ssh/known_hosts
+  if [ $? -ne 0 ]; then
+    echo "SSH keys not ready, sleeping"
+    sleep 5
+  else
+    break
+  fi
+done
+EOF
+  }
+}
+
+resource "null_resource" "server_ready" {
+  depends_on = [null_resource.accept_ssh_key]
+
+  provisioner "local-exec" {
     command     = <<EOF
 set -x
 while :
 do
   make status ip=${digitalocean_droplet.wg.ipv4_address}
   if [ $? -ne 0 ]; then
-    echo "Not ready, sleeping"
+    echo "Server not ready, sleeping"
     sleep 10
   else
     sleep 30      # let the server restart

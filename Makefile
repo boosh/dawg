@@ -1,5 +1,3 @@
-SHELL = /bin/bash
-
 DO_TOKEN_FILE := ~/.digitalocean/token
 YDNS_CREDS_FILE := ~/.ydns
 
@@ -70,8 +68,6 @@ ip ?= $$(terraform output ip | tr -d '\n')
 
 .PHONY: status
 status: ## Print server status
-	ssh-keygen -R $(ip) ;\
-	ssh-keyscan -H $(ip) >> ~/.ssh/known_hosts ;\
 	ssh root@$(ip) wg ;\
 	if [[ $$? == 0 ]]; then echo "Server ready"; exit 0; else echo "Server not ready..."; exit 1; fi
 
