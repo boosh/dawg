@@ -28,6 +28,13 @@ write_files:
   path: /etc/wireguard/server_private.key
   permissions: '0400'
 %{ endif }
+%{ if server_preshared_key != "" }
+- encoding: b64
+  content: ${base64encode(server_preshared_key)}
+  owner: root:root
+  path: /etc/wireguard/server_preshared.key
+  permissions: '0400'
+%{ endif }
 runcmd:
 - [ufw, allow, 22/tcp]
 - [ufw, enable]

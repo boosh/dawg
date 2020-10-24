@@ -3,19 +3,19 @@ ydns_url = "wg.ydns.eu"
 
 clients = {
   "burner" = {
-    ip         = "10.0.0.36/32",
-    public_key = "k86wn4GJKnbl/Z+zO48t1a5dL623E2AyUHJKr8Rn+VQ="
+    ip         = "10.0.0.48/32",
+    public_key = "hBwRlPeLe2INUwCDEalDYxjwo8w/lV5hhnepVgP2RFg="
   },
   "phone" = {
-    ip         = "10.0.0.45/32",
-    public_key = "i10RQDqNL2fjMqYqyhNkHQVCUgGlvdjy8HWZJqmq0EA="
+    ip         = "10.0.0.6/32",
+    public_key = "fXC2rv/WhCJL7IX1KQIzFh93be/TEsO5F8n5Hv9FAXc="
   },
   "mac" = {
-    ip         = "10.0.0.183/32",
-    public_key = "dWs+Z2DIB1GvJSV0nBj3ArtU2dbPPAtpC3cGCTf5eTY="
+    ip         = "10.0.0.204/32",
+    public_key = "Hm3WEFBQbTSAcAT242fQiM7XJoswtvh+w1WpcISSL3s="
   },
   "tablet" = {
-    ip         = "10.0.0.251/32",
-    public_key = "sLXloK3GZca6Kfxu+B+1ZZU3eQBKI7XlidRq2CbZf2Y="
+    ip         = "10.0.0.120/32",
+    public_key = "onk2IF7JueSuOudHkK4sNK/iee7oTj5DrVHcBohVDBs="
   }
 }

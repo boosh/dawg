@@ -9,6 +9,12 @@ EXT_IF=$(ip route sh | awk '$1 == "default" { print $5 }')
 function generate_keys() {
   local name=$1
 
+  psk_key_path=/etc/wireguard/server_preshared.key
+  if [[ ! -f "$psk_key_path" ]]; then
+    wg genpsk > $psk_key_path
+    chmod 0600 $psk_key_path
+  fi
+
   private_key_path=/etc/wireguard/${name}_private.key
 
   if [[ ! -f "$private_key_path" ]]; then
@@ -45,8 +51,8 @@ EOF
 
 generate_keys server
 
-sed -i -E 's/#(net.ipv4.ip_forward=1)/\1/' /etc/sysctl.conf
-sysctl -p
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/wg.conf
+sysctl --system
 
 ufw allow $PORT/udp
 

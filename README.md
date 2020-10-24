@@ -20,7 +20,7 @@ With a single command, this repo will create a Digital Ocean droplet (server) an
 
 This will launch a Digital Ocean droplet, apply updates, enable automated security updates, enable the UFW firewall and configure Wireguard. If `clients` in `terraform/terraform.tfvars` is not empty, those clients will be automatically imported into the Wireguard config.
 
-The server's private key is downloaded to `~/.dawg-private-key`. Don't share this with anyone. If this is deleted you'll need to reconfigure all your clients if you destroy and recreate the server.
+The server's private keys are downloaded to `~/.dawg-server-keys`. Don't share this with anyone. If this is deleted you'll need to reconfigure all your clients if you destroy and recreate the server.
 
 ### Create a new client
 Run `make new-client name=<name>` where `<name>` is how you'd like to identify this client (e.g. `laptop`, `phone`, etc). This is only used in strings and can be anything.

@@ -1,13 +1,14 @@
 DO_TOKEN_FILE := ~/.digitalocean/token
 YDNS_CREDS_FILE := ~/.ydns
-SERVER_PRIVATE_KEY_PATH := ~/.dawg-private-key
+SERVER_KEYS_PATH := ~/.dawg-server-keys
 
 TF_DIR := terraform
 TF_PLAN := $(TF_DIR)/_terraform.plan
 TF_VARS := -var-file=terraform/terraform.tfvars \
 			-var="do_token=$$(cat $(DO_TOKEN_FILE) | tr -d '\n')" \
 			-var="ydns_credentials=$$(cat $(YDNS_CREDS_FILE) | tr -d '\n')" \
-			-var="server_private_key=$$(cat $(SERVER_PRIVATE_KEY_PATH) || echo "")"
+			-var="server_private_key=$$(cat $(SERVER_KEYS_PATH) | head -n1 || echo "")" \
+			-var="server_preshared_key=$$(cat $(SERVER_KEYS_PATH) | tail -n1 || echo "")"
 
 .DEFAULT_GOAL := help
 
@@ -79,13 +80,14 @@ ssh: ## SSH to the server
 	ssh root@$$(terraform output ip | tr -d '\n')
 
 .PHONY: download-key
-download-key: ## Download the server's private key and store locally
+download-key: ## Download the server's private keys and store locally
 	set -eo pipefail ;\
-	if [[ -f $(SERVER_PRIVATE_KEY_PATH) ]]; then \
-		echo Private key already exists at $(SERVER_PRIVATE_KEY_PATH) ;\
+	if [[ -f $(SERVER_KEYS_PATH) ]]; then \
+		echo Private keys already exists at $(SERVER_KEYS_PATH) ;\
 	else \
-		ssh root@$$(terraform output ip | tr -d '\n') cat /etc/wireguard/server_private.key > $(SERVER_PRIVATE_KEY_PATH) && \
-			echo Private key downloaded to $(SERVER_PRIVATE_KEY_PATH) ;\
+		ssh root@$$(terraform output ip | tr -d '\n') cat /etc/wireguard/server_private.key > $(SERVER_KEYS_PATH) && \
+		ssh root@$$(terraform output ip | tr -d '\n') cat /etc/wireguard/server_preshared.key >> $(SERVER_KEYS_PATH) && \
+			echo Private keys downloaded to $(SERVER_KEYS_PATH) ;\
 	fi
 
 .PHONY: qr

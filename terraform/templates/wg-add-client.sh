@@ -56,6 +56,7 @@ DNS = 1.1.1.1
 
 [Peer]
 PublicKey = $(cat /etc/wireguard/server_public.key | tr -d '\n')
+PresharedKey = $(cat /etc/wireguard/server_preshared.key | tr -d '\n')
 Endpoint = $endpoint:$port
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
@@ -75,6 +76,7 @@ function update_server_config() {
 [Peer]
 # $name
 PublicKey = $public_key
+PresharedKey = $(cat /etc/wireguard/server_preshared.key)
 AllowedIPs = $client_ip
 
 EOF

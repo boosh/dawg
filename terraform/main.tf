@@ -5,10 +5,11 @@ resource "digitalocean_droplet" "wg" {
   size     = var.droplet_size
   ssh_keys = var.ssh_keys
   user_data = templatefile("${path.module}/templates/user-data.txt", {
-    server_private_key  = var.server_private_key
-    update_ydns         = base64encode(file("${path.module}/templates/update-ydns.sh"))
-    wg_configure_server = base64encode(file("${path.module}/templates/wg-configure-server.sh"))
-    wg_add_client       = base64encode(file("${path.module}/templates/wg-add-client.sh"))
+    server_private_key   = var.server_private_key
+    server_preshared_key = var.server_preshared_key
+    update_ydns          = base64encode(file("${path.module}/templates/update-ydns.sh"))
+    wg_configure_server  = base64encode(file("${path.module}/templates/wg-configure-server.sh"))
+    wg_add_client        = base64encode(file("${path.module}/templates/wg-add-client.sh"))
   })
 }
 

@@ -33,6 +33,12 @@ variable "server_private_key" {
   default     = ""
 }
 
+variable "server_preshared_key" {
+  type        = string
+  description = "Optional preshared-key to push onto the server"
+  default     = ""
+}
+
 variable "ssh_keys" {
   type        = list(number)
   description = "IDs of SSH keys to add (get them from the DO API)"
