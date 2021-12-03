@@ -6,6 +6,7 @@ With a single command, this repo will create a Digital Ocean droplet (server) an
 * Optionally import existing client configs when the server is created 
 * Commands to create new clients and download their configs or import existing configs
 * Display downloaded configs as QR codes to easily configure mobile devices (requires `qrencode`)
+* Optionally snapshot the server and restore from a snapshot to speed up reprovisioning
 
 ## Quickstart
 1. Download Terraform or asdf & qrencode (with e.g. `brew install asdf qrencode` if on a Mac)
@@ -34,6 +35,13 @@ Run `make add-client` and enter the details the help message tells you to.
 If you want to destroy the server, just run `make destroy`. You can recreate it again with `make deploy`.
 
 This uses Terraform - if the `terraform.tfstate` file is deleted, `make destroy` won't work. But this only creates a single Digital Ocean droplet, so in that case just log into your account and manually delete the droplet.
+
+### Snapshots
+To speed up reprovisioning you can take a snapshot once the server is configured. Just run `make snapshot`. This will create a snapshot called `dawg`. 
+
+To restore from a snapshot, set `use_snapshot = true` in your `terraform.tfvars` file. The next time the server is deployed it will be from this snapshot.
+
+*Note*: No command is provided to delete any snapshots. You'll need to do that manually through the DO console/CLI
 
 ## Other commands
 Run `make` for a list of commands that can be run. There are commands to e.g. SSH to the server, check the status, etc.

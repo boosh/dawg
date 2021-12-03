@@ -79,6 +79,10 @@ status: ## Print server status
 ssh: ## SSH to the server
 	ssh root@$$(terraform output ip | tr -d '\n')
 
+.PHONY: snapshot
+snapshot: ## Snapshot the server
+	ssh root@$$(terraform output ip | tr -d '\n') doctl -t $$(cat $(DO_TOKEN_FILE) | tr -d '\n') compute droplet-action snapshot $$(terraform output droplet_id | tr -d '\n') --snapshot-name dawg
+
 .PHONY: download-key
 download-key: ## Download the server's private keys and store locally
 	set -eo pipefail ;\

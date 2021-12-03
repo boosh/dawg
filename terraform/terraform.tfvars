@@ -19,3 +19,5 @@ clients = {
     public_key = "onk2IF7JueSuOudHkK4sNK/iee7oTj5DrVHcBohVDBs="
   }
 }
+
+use_snapshot = true

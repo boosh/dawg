@@ -44,6 +44,18 @@ variable "ssh_keys" {
   description = "IDs of SSH keys to add (get them from the DO API)"
 }
 
+variable "snapshot_name" {
+  type        = string
+  description = "If non-empty, use a snapshot with this name. If you change this, also update the snapshot name in the 'snapshot' target of the Makefile"
+  default     = "dawg"
+}
+
+variable "use_snapshot" {
+  type        = bool
+  description = "Whether to launch an instance from a snapshot"
+  default     = false
+}
+
 variable "ydns_credentials" {
   type        = string
   description = "Credentials in the form 'username:password' (password can also be an API key)"

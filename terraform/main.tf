@@ -1,5 +1,5 @@
 resource "digitalocean_droplet" "wg" {
-  image    = var.droplet_image
+  image    = var.use_snapshot ? data.digitalocean_droplet_snapshot.snapshot.0.id : var.droplet_image
   name     = "wg"
   region   = var.droplet_region
   size     = var.droplet_size
@@ -45,7 +45,7 @@ do
     echo "Server not ready, sleeping"
     sleep 10
   else
-    sleep 30      # let the server restart
+    sleep ${var.use_snapshot ? 1 : 30}      # let the server restart when not using snapshots
     break
   fi
 done

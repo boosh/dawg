@@ -38,6 +38,7 @@ write_files:
 runcmd:
 - [ufw, allow, 22/tcp]
 - [ufw, enable]
+- [snap, install, doctl]
 - [cp, /usr/share/unattended-upgrades/20auto-upgrades, /etc/apt/apt.conf.d/20auto-upgrades]
 - [tee, 'Unattended-Upgrade::Automatic-Reboot "true";', /etc/apt/apt.conf.d/50unattended-upgrades]
 - [tee, 'Unattended-Upgrade::Automatic-Reboot-Time "04:00";', /etc/apt/apt.conf.d/50unattended-upgrades]
