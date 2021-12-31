@@ -2,6 +2,8 @@ DO_TOKEN_FILE := ~/.digitalocean/token
 YDNS_CREDS_FILE := ~/.ydns
 SERVER_KEYS_PATH := ~/.dawg-server-keys
 
+SHELL := /bin/bash
+
 TF_DIR := terraform
 TF_PLAN := $(TF_DIR)/_terraform.plan
 TF_VARS := -var-file=terraform/terraform.tfvars \
@@ -78,6 +80,10 @@ status: ## Print server status
 .PHONY: ssh
 ssh: ## SSH to the server
 	ssh root@$$(terraform output ip | tr -d '\n')
+
+.PHONY: ssh-list
+ssh-list: ## List IDs of SSH key in Digital Ocean
+	doctl -t $(shell cat ~/.digitalocean/token) compute ssh-key list
 
 .PHONY: snapshot
 snapshot: ## Snapshot the server

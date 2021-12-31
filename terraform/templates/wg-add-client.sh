@@ -72,6 +72,11 @@ function update_server_config() {
   local client_ip=$2
   local public_key=$3
 
+  grep $name /etc/wireguard/wg0.conf
+  if [[ $? == 0 ]]; then    # already added, so just return
+    return
+  fi
+
   cat >>/etc/wireguard/wg0.conf <<EOF
 [Peer]
 # $name
