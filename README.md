@@ -14,7 +14,7 @@ With a single command, this repo will create a Digital Ocean droplet (server) an
 1. Sign up with ydns.io. Get an API key and write it to `~/.ydns` in the form `<username>:<password/key>`
 1. Clone this repo locally
 1. Edit `terraform/terraform.tfvars`: 
-    1. Add your Digital Ocean SSH key ID (you can find this from the DO API)
+    1. Add your Digital Ocean SSH key ID (you can find this with `make ssh-list`)
     1. Set `ydns_url` to whatever your YDNS URL is
     1. Set `clients` to `{}`
 1. Run `make deploy`
