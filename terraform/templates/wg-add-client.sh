@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -o pipefail
 
 PORT=51820
 INT_NET_ADDR=10.0.0
