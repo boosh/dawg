@@ -26,7 +26,9 @@ The server's private keys are downloaded to `~/.dawg-server-keys`. Don't share t
 ### Create a new client
 Run `make new-client name=<name>` where `<name>` is how you'd like to identify this client (e.g. `laptop`, `phone`, etc). This is only used in strings and can be anything.
 
-The config will be downloaded to `~/Downloads/wg-<name>.conf`. You can then import it into your desktop Wireguard client, or create a QR code with `make qr name=<name>`. 
+The config will be downloaded to `~/Downloads/wg-<name>.conf`. You can then import it into your desktop Wireguard client (make sure to rename the file to `wg0.conf` on linux first), or create a QR code with `make qr name=<name>`.
+
+Make sure to copy the relevant details into `terraform.tfvars`. For the public key, use the value under the `Interface` section of the downloaded config file (the line starts `# Note: PublicKey = ???`).
 
 ### Add existing clients
 Run `make add-client` and enter the details the help message tells you to.

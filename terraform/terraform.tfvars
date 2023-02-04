@@ -22,9 +22,17 @@ clients = {
     ip         = "10.0.0.204/32",
     public_key = "Hm3WEFBQbTSAcAT242fQiM7XJoswtvh+w1WpcISSL3s="
   },
+  "rf711" = {
+    ip         = "10.0.0.218/32",
+    public_key = "zLCmHzL2I5qGR6bmORBNbIJud/7ct3KOT8xr6N/ENzY="
+  },
   "tablet" = {
     ip         = "10.0.0.120/32",
     public_key = "onk2IF7JueSuOudHkK4sNK/iee7oTj5DrVHcBohVDBs="
+  },
+  "xps13" = {
+    ip         = "10.0.0.219/32",
+    public_key = "4cCVPB8mUQ6kAtEJR36XC9dL5GBz3xtGAGWP06nVZmE="
   }
 }
 
