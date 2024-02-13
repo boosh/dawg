@@ -3,7 +3,6 @@ resource "null_resource" "client" {
     type        = "ssh"
     user        = "root"
     host        = var.server_ip
-    private_key = file("~/.ssh/id_rsa")
   }
 
   provisioner "remote-exec" {

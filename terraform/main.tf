@@ -38,6 +38,7 @@ resource "null_resource" "server_ready" {
   provisioner "local-exec" {
     command = <<EOF
 set -x
+pushd ..
 while :
 do
   make status ip=${digitalocean_droplet.wg.ipv4_address}
@@ -60,7 +61,6 @@ resource "null_resource" "update_ydns" {
     type        = "ssh"
     user        = "root"
     host        = digitalocean_droplet.wg.ipv4_address
-    private_key = file("~/.ssh/id_rsa")
   }
 
   provisioner "remote-exec" {
